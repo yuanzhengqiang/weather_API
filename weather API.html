@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="Access-Control-Allow-Origin" content="*">
+	<title>weather API</title>
+</head>
+<body>
+	<script type="text/javascript" src="http://www.coding123.net/getip.ashx?js=1"></script>
+	<script type="text/javascript" src="jquery-3.2.1.js"></script>
+	<script>
+	
+	  	/*
+	  	106003 天气预报(5-7天) 文档(weather.future)
+		106004 实时天气 文档(weather.today)
+		106007 历史天气 文档(weather.history)
+		106010 PM2.5 AQI 文档(weather.pm25)
+		106011 生活指数(5-7天) 文档(weather.lifeindex)
+		106002 城市列表 文档(weather.city)
+		106005 天气类型 文档(weather.wtype)
+	    "result": [{
+		    "weaid": "1",
+		    "days": "2014-07-30",
+		    "week": "星期三",
+		    "cityno": "beijing",
+		    "citynm": "北京",
+		    "cityid": "101010100",
+		    "temperature": "23℃/11℃", //温度
+		    "humidity": "0%/0%", //湿度,后期气像局未提供,如有需要可使用weather.today接口 
+		    "weather": "多云转晴",
+		    "weather_icon": "http://api.k780.com:88/upload/weather/d/1.gif", //气象图标 下载
+		    "weather_icon1": "http://api.k780.com:88/upload/weather/d/0.gif", //气象图标 下载
+		    "wind": "微风", //风向
+		    "winp": "小于3级", //风力
+		    "temp_high": "31", //最高温度
+		    "temp_low": "24", //最低温度
+		    "humi_high": "0", //湿度栏位已不再更新
+		    "humi_low": "0",//湿度栏位已不再更新
+		    "weatid": "2", //白天天气ID
+		    "weatid1": "1", //夜间天气ID
+		    "windid": "1", //风向ID
+		    "winpid": "2" //风力ID
+		 }
+		*/ 
+		const id = ip.substr(1,ip.length);
+		$.ajax({ 
+	        url: 'http://api.k780.com/?app=weather.today&weaid='+id+'&appkey=26367&sign=bb23352cb3101781a1ee1fe888329766&format=json&jsoncallback=data', 
+	        type: 'get',
+	        async: false,
+	        dataType: 'JSONP',  // 处理Ajax跨域问题
+	        jsonp: 'jsonp',
+	        jsonpCallback: 'data',
+	        success: function(data){ 
+	            //遍历
+	            var description = "";
+	            for(var i in data.result){
+	                var property=data.result[i];
+	                description+=i+" = "+property+"\n";
+	            }
+	            alert(description);
+	        },
+	        error:function(){
+	            alert('error');
+	        }
+	    }); 
+	</script>
+	
+</body>
+</html>
